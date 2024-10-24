@@ -43,3 +43,29 @@ FROM
     temp
 GROUP BY 
     order_id;
+
+-- p5 -- ********************************************************************
+-- Встановлюємо новий роздільник
+DELIMITER //
+
+-- Видаляємо функцію, якщо вона вже існує
+DROP FUNCTION IF EXISTS divide_numbers //
+
+-- Створюємо функцію
+CREATE FUNCTION divide_numbers(a FLOAT, b FLOAT)
+RETURNS FLOAT
+DETERMINISTIC
+BEGIN
+    RETURN a / b;
+END //
+
+-- Повертаємо роздільник на стандартний
+DELIMITER ;
+
+-- Застосовуємо функцію
+SELECT 
+    order_id,
+    quantity,
+    divide_numbers(quantity, 2.5) AS divided_quantity
+FROM 
+    order_details;
