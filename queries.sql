@@ -18,3 +18,14 @@ WHERE
         FROM orders 
         WHERE shipper_id = 3
     );
+
+-- p3 -- ********************************************************************
+SELECT 
+    order_id, 
+    AVG(quantity) AS avg_quantity
+FROM 
+    (SELECT order_id, quantity 
+     FROM order_details 
+     WHERE quantity > 10) AS filtered_order_details
+GROUP BY 
+    order_id;
